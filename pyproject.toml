@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dispatch-grafana-oncall"
+version = "0.1.0"
+description = "Grafana OnCall plugin for Dispatch incident management"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [{ name = "helldweller" }]
+keywords = ["dispatch", "grafana", "oncall", "incident-management"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: System Administrators",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Monitoring",
+]
+# Dispatch itself is the host application and is not on PyPI, so it is deliberately
+# not listed here: install this package into the Dispatch environment.
+dependencies = ["requests>=2.31"]
+
+[project.urls]
+Repository = "https://github.com/helldweller/dispatch-grafana-oncall"
+Issues = "https://github.com/helldweller/dispatch-grafana-oncall/issues"
+
+[project.entry-points."dispatch.plugins"]
+grafana_oncall = "dispatch_grafana_oncall.plugin:GrafanaOncallPlugin"
+
+[dependency-groups]
+dev = ["pytest>=8", "requests-mock>=1.12"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dispatch_grafana_oncall"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
