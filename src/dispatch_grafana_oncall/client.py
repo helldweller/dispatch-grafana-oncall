@@ -99,7 +99,7 @@ def shift_change(shifts: list[dict], now: datetime) -> dict | None:
     if not previous or not upcoming or previous["user_email"] == upcoming["user_email"]:
         return None
     start = _parse(previous["shift_start"])
-    # ponytail: walks back only through the fetched window; a run longer than the window is truncated to it.
+    # The walk-back is bounded by the fetched window: a run longer than the window is truncated to it.
     while (earlier := shift_at(shifts, start - timedelta(seconds=1))) and earlier["user_email"] == previous["user_email"]:
         start = _parse(earlier["shift_start"])
     return {"email": previous["user_email"], "shift_start": start, "shift_end": _parse(previous["shift_end"])}
